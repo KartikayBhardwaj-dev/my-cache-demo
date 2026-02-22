@@ -16,4 +16,4 @@ jobs:
         key: cache-5bcf949
         path: ~/.npm
         
-    - run: npm ci
+    - run: npm install  # Changed: Works without package-lock.json
