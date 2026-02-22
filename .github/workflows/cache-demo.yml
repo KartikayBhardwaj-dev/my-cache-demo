@@ -1,0 +1,24 @@
+name: Cache Demo
+
+on: [push]  # Triggers on any push to any branch
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Prime cache  # This is the required step name
+      id: prime-cache-5bcf949
+      uses: actions/cache@v4
+      with:
+        key: cache-5bcf949  # Exact key required
+        path: ~/.npm  # Cache npm dependencies (common example)
+        
+    - name: Install dependencies  # This will be fast after first run
+      run: npm ci  # Or use 'npm install', 'pip install -r requirements.txt', etc.
+      
+    - name: Verify cache result  # Optional: shows hit/miss
+      run: echo "Cache result: ${{ steps.prime-cache-5bcf949.outputs.cache-hit }}"
